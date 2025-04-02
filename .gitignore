@@ -1,0 +1,61 @@
+# Virtual environments
+.venv/
+.env
+.env.*
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.egg-info/
+.mypy_cache/
+.pytest_cache
+
+# Dagster
+.dagster/
+.tmp_dagster_home_*/
+dagster_home/
+dagster.yaml
+dagster.log
+sensors.py
+
+# dbt
+dbt_modules/
+dbt_packages/
+target/ 
+profiles.yml
+dbt_project/profiles.yml
+seeds/
+snapshots/
+analyses/
+
+# VSCode and JetBrains IDEs
+.vscode/
+.idea/
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+*.db
+*.sqlite3
+*.pid
+*.pid.lock
+
+# Jupyter
+.ipynb_checkpoints/
+
+# CSV and output logs (if generated locally)
+*.csv
+logs/
+
+# Build artifacts (in case of packaging)
+dist/
+build/
+.eggs/
+.user.yml
+
+uv.lock
+setup.cfg
+pyproject.toml
+dagster_cloud.yaml
+

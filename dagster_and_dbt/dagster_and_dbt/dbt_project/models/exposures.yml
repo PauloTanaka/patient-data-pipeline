@@ -1,0 +1,16 @@
+version: 2
+
+exposures:
+  - name: fhir_patient_dashboard
+    type: dashboard
+    label: "FHIR Patient Dashboard"
+    maturity: low
+    description: >
+      Power BI dashboard that displays fhir_patient table.
+
+    depends_on:
+      - ref('fhir_patient')
+
+    owner:
+      name: Paulo Tadao Tanaka
+      email: paulo.tanaka@example.com

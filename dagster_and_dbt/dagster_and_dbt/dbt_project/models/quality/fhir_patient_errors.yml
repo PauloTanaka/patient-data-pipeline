@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: fhir_patient_errors
+    description: "Model that identifies invalid records from the fhir_patient table"
+    columns:
+      - name: id
+        description: "Unique identifier for the patient"
+      - name: full_name
+        description: "Full name of the patient, created using the first_name and last_name"
+      - name: birth_date
+        description: "Date of birth of the patient"
+      - name: gender
+        description: "Gender of the patient. Expected values: male, female, other, unknown"
+      - name: address
+        description: "Full address information of the patient, including address, city, state and zip_code "
+      - name: telecom
+        description: "JSON object containing phone and email of the patient"
+      - name: marital_status
+        description: "Marital status of the patient"
+      - name: insurance_number
+        description: "Insurance number of the patient"
+      - name: nationality
+        description: "Nationality of the patient"
+      - name: error_type
+        description: Type of validation error found in the record (e.g., id_missing, gender_invalid).
