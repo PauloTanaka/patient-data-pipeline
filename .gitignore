@@ -17,6 +17,7 @@ dagster_home/
 dagster.yaml
 dagster.log
 sensors.py
+resources.py
 
 # dbt
 dbt_modules/
@@ -58,4 +59,3 @@ uv.lock
 setup.cfg
 pyproject.toml
 dagster_cloud.yaml
-
