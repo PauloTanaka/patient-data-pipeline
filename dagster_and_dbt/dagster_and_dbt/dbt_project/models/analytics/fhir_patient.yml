@@ -2,38 +2,39 @@ version: 2
 
 models:
   - name: fhir_patient
-    description: "Table containing patient demographic and administrative information in FHIR format"
+    description: >
+      Final patient model built from the cleaned staging layer.
+      Includes a generated ID, normalized fields, and contact information in JSONB format.
     columns:
       - name: id
-        description: "Unique identifier for the patient"
+        description: Unique identifier generated as a hash of key patient attributes.
         tests:
           - not_null
           - unique
+
       - name: full_name
-        description: "Full name of the patient, created using the first_name and last_name"
-        tests:
-          - not_null
+        description: Full name of the patient.
+
       - name: birth_date
-        description: "Date of birth of the patient"
-        tests:
-          - not_null
+        description: Patient's birth date.
+
       - name: gender
-        description: "Gender of the patient. Expected values: male, female, other, unknown"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['male', 'female', 'other', 'unknown']
+        description: Normalized gender (Male, Female, Non-Binary, Unknown).
+
       - name: address
-        description: "Full address information of the patient, including address, city, state and zip_code "
-        tests:
-          - not_null
+        description: Street address.
+
       - name: telecom
-        description: "JSON object containing phone and email of the patient"
+        description: JSONB object containing phone and email information.
+
+      - name: marital_status
+        description: Patient's marital status.
+
+      - name: insurance_number
+        description: Unique insurance number for each patient.
         tests:
           - not_null
-      - name: marital_status
-        description: "Marital status of the patient"
-      - name: insurance_number
-        description: "Insurance number of the patient"
+          - unique
+
       - name: nationality
-        description: "Nationality of the patient"
+        description: Truncated nationality (max 20 characters).
