@@ -16,7 +16,19 @@ clean-targets:
 
 models:
   dbt_project:
-    analytics:
-      materialized: table
+
+    staging:
+      materialized: view  # staging models are usually lightweight and rebuilt often
+
+    marts:
+      materialized: table  # final models used for reporting or consumption
+
     quality:
-      materialized: table
+      materialized: table  # helpful to persist data validation results
+
+    sources:
+      enabled: true  # only holds .yml source definitions
+
+dispatch:
+  - macro_namespace: dbt_utils
+    search_order: ['dbt_project', 'dbt_utils']
