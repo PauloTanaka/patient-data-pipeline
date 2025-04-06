@@ -1,0 +1,62 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: patient
+        description: >
+          Raw table containing patient data loaded from the CSV file.
+        columns:
+          - name: id
+            description: Unique identifier of the row in the raw table.
+          - name: first_name
+            description: Patient's first name.
+          - name: last_name
+            description: Patient's last name.
+
+models:
+  - name: stg_patient
+    description: >
+      Staging model for patient data with normalization and data quality flags.
+    columns:
+      - name: patient_id
+        description: Unique identifier of the patient inherited from raw_patient.
+        tests:
+          - not_null
+
+      - name: full_name
+        description: Full name of the patient (first + last name capitalized).
+
+      - name: birth_date
+        description: Patient's date of birth.
+
+      - name: gender
+        description: Normalized gender (Male, Female, Non-Binary, Unknown).
+
+      - name: email
+        description: Patient's email address.
+
+      - name: is_valid_email
+        description: Flag indicating whether the email format is valid (regex).
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+      - name: has_valid_birth_date
+        description: Flag indicating whether birth date is not null and not in the future.
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+      - name: has_valid_visit_date
+        description: Flag indicating whether last visit date is null or in the past.
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+      - name: is_valid_state
+        description: Flag checking whether the provided state is a valid US state abbreviation.
+        tests:
+          - accepted_values:
+              values: [true, false]

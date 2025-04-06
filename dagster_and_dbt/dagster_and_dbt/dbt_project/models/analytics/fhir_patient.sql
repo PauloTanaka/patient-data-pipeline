@@ -4,7 +4,7 @@ WITH patient AS (
         id,
         first_name || ' ' || last_name AS full_name,
         birth_date,
-        gender,
+        LOWER(gender) AS gender,
         address || ', ' || city || ', ' || state || ', ' || zip_code AS address,
         jsonb_build_object(
             'phone', phone_number, 

@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: invalid_patients
+    description: >
+      This model exposes patient records that fail at least one data quality validation rule.
+      These include invalid email format, birth dates in the future or null, visit dates in the future,
+      or invalid U.S. state abbreviations.
+    columns:
+      - name: patient_id
+        description: Unique identifier of the patient from the raw source.
+
+      - name: full_name
+        description: Patient's full name (first + last).
+
+      - name: email
+        description: Email address flagged as invalid when the format doesn't match standard patterns.
+
+      - name: birth_date
+        description: Considered invalid if null or in the future.
+
+      - name: last_visit_date
+        description: Considered invalid if it's set in the future.
+
+      - name: state
+        description: U.S. state abbreviation that must match a valid state code.
+
+      - name: is_valid_email
+        description: Flag indicating whether the email format is valid.
+
+      - name: has_valid_birth_date
+        description: Flag indicating whether the birth date is not null and not in the future.
+
+      - name: has_valid_visit_date
+        description: Flag indicating whether the visit date is null or in the past.
+
+      - name: is_valid_state
+        description: Flag indicating whether the state is a valid U.S. state code.

@@ -22,7 +22,7 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['Male', 'Female', 'Other', 'Unknown']
+              values: ['male', 'female', 'other', 'unknown']
       - name: address
         description: "Full address information of the patient, including address, city, state and zip_code "
         tests:
