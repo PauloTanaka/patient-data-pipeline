@@ -1,8 +1,28 @@
--- models/staging/stg_patient.sql
-
 with source as (
 
-    select * from {{ source('raw', 'patient') }}
+    select
+        id,
+        first_name,
+        last_name,
+        birth_date,
+        gender,
+        address,
+        city,
+        state,
+        zip_code,
+        phone_number,
+        email,
+        emergency_contact_name,
+        emergency_contact_phone,
+        blood_type,
+        insurance_provider,
+        insurance_number,
+        marital_status,
+        preferred_language,
+        nationality,
+        allergies,
+        last_visit_date
+    from {{ source('staging', 'raw_patient') }}
 
 ),
 
@@ -18,11 +38,11 @@ renamed as (
         last_visit_date,
 
         -- Gender normalization
-        case 
+        case
             when lower(gender) in ('m', 'male') then 'Male'
             when lower(gender) in ('f', 'female') then 'Female'
-            when lower(gender) in ('non-binary', 'nonbinary', 'nb') then 'Non-Binary'
-            else 'Unknown'
+            when gender is null or trim(gender) = '' or lower(gender) = 'unknown' then 'Unknown'
+            else 'Other'
         end as gender,
 
         -- Address
@@ -67,9 +87,46 @@ renamed as (
         case
             when state in {{ get_valid_us_states() }} then true
             else false
-        end as is_valid_state
+        end as is_valid_state,
+
+        case
+            when preferred_language in {{ get_valid_languages() }} then true
+            else false
+        end as is_valid_language,
+
+        case
+            when marital_status in {{ get_valid_marital_statuses() }} then true
+            else false
+        end as is_valid_marital_status
 
     from source
 )
 
-select * from renamed;
+select
+    patient_id,
+    full_name,
+    birth_date,
+    last_visit_date,
+    gender,
+    address,
+    city,
+    state,
+    zip_code,
+    phone_number,
+    email,
+    emergency_contact_name,
+    emergency_contact_phone,
+    blood_type,
+    insurance_provider,
+    insurance_number,
+    marital_status,
+    preferred_language,
+    nationality,
+    allergies,
+    is_valid_email,
+    has_valid_birth_date,
+    has_valid_visit_date,
+    is_valid_state,
+    is_valid_language,
+    is_valid_marital_status
+from renamed

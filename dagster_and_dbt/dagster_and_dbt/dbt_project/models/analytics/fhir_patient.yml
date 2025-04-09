@@ -3,38 +3,53 @@ version: 2
 models:
   - name: fhir_patient
     description: >
-      Final patient model built from the cleaned staging layer.
-      Includes a generated ID, normalized fields, and contact information in JSONB format.
+      Final patient model with deduplication and consolidation logic,
+      selecting the most recent non-null values per insurance_provider + insurance_number.
+
     columns:
       - name: id
-        description: Unique identifier generated as a hash of key patient attributes.
+        description: Unique identifier generated from patient attributes.
         tests:
           - not_null
           - unique
 
       - name: full_name
-        description: Full name of the patient.
-
-      - name: birth_date
-        description: Patient's birth date.
-
-      - name: gender
-        description: Normalized gender (Male, Female, Non-Binary, Unknown).
-
-      - name: address
-        description: Street address.
-
-      - name: telecom
-        description: JSONB object containing phone and email information.
-
-      - name: marital_status
-        description: Patient's marital status.
-
-      - name: insurance_number
-        description: Unique insurance number for each patient.
+        description: Full name of the patient, generated from first and last name.
         tests:
           - not_null
-          - unique
+
+      - name: birth_date
+        description: Most recent valid birth date available for the patient.
+        tests:
+          - not_null
+
+      - name: gender
+        description: Normalized gender (Male, Female, Unknown, Other).
+        tests:
+          - accepted_values:
+              values: ['Male', 'Female', 'Unknown', 'Other']
+
+      - name: address
+        description: Most recent non-null address.
+
+      - name: telecom
+        description: JSON object containing the patient's phone and email.
+
+      - name: marital_status
+        description: Most recent valid marital status.
+        tests:
+          - accepted_values:
+              values: ['Annulled', 'Divorced', 'Interlocutory', 'Legally Separated', 'Married',
+                       'Common Law', 'Polygamous', 'Domestic partner', 'unmarried',
+                       'Never Married', 'Widowed', 'unknown']
+
+      - name: insurance_number
+        description: Patient's insurance number used for deduplication.
+        tests:
+          - not_null
 
       - name: nationality
-        description: Truncated nationality (max 20 characters).
+        description: Patient's most recent non-null nationality.
+
+      - name: last_visit_date
+        description: Most recent visit date among valid records.

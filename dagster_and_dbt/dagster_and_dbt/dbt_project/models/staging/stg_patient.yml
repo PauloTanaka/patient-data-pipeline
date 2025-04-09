@@ -1,20 +1,5 @@
 version: 2
 
-sources:
-  - name: raw
-    schema: raw
-    tables:
-      - name: patient
-        description: >
-          Raw table containing patient data loaded from the CSV file.
-        columns:
-          - name: id
-            description: Unique identifier of the row in the raw table.
-          - name: first_name
-            description: Patient's first name.
-          - name: last_name
-            description: Patient's last name.
-
 models:
   - name: stg_patient
     description: >
@@ -32,7 +17,7 @@ models:
         description: Patient's date of birth.
 
       - name: gender
-        description: Normalized gender (Male, Female, Non-Binary, Unknown).
+        description: Normalized gender (Male, Female, Unknown, Other).
 
       - name: email
         description: Patient's email address.
@@ -57,6 +42,18 @@ models:
 
       - name: is_valid_state
         description: Flag checking whether the provided state is a valid US state abbreviation.
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+      - name: is_valid_language
+        description: Flag verifying whether the preferred language is in the list of allowed languages.
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+      - name: is_valid_marital_status
+        description: Flag indicating whether the marital status is valid.
         tests:
           - accepted_values:
               values: [true, false]

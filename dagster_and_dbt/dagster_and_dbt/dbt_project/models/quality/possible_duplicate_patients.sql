@@ -6,7 +6,7 @@ with base as (
         full_name,
         birth_date,
         gender,
-        count(*) over (partition by insurance_number) as cnt,
+        --count(*) over (partition by insurance_number) as cnt,
         row_number() over (partition by insurance_number order by full_name) as row_num
     from {{ ref('stg_patient') }}
     where insurance_number is not null
