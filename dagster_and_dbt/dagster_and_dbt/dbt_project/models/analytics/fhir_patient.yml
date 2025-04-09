@@ -3,53 +3,58 @@ version: 2
 models:
   - name: fhir_patient
     description: >
-      Final patient model with deduplication and consolidation logic,
-      selecting the most recent non-null values per insurance_provider + insurance_number.
+      Final patient model with deduplicated records based on insurance_provider and insurance_number.
+      This model preserves all records regardless of data quality. Validation tests are defined to detect
+      data quality issues without filtering or deleting any data.
 
     columns:
       - name: id
-        description: Unique identifier generated from patient attributes.
+        description: Unique patient identifier generated from patient attributes.
         tests:
           - not_null
           - unique
 
       - name: full_name
-        description: Full name of the patient, generated from first and last name.
+        description: Full name of the patient.
         tests:
           - not_null
 
       - name: birth_date
-        description: Most recent valid birth date available for the patient.
+        description: Most recent known birth date.
         tests:
           - not_null
 
       - name: gender
-        description: Normalized gender (Male, Female, Unknown, Other).
+        description: Most recent known gender value.
         tests:
           - accepted_values:
               values: ['Male', 'Female', 'Unknown', 'Other']
 
       - name: address
-        description: Most recent non-null address.
+        description: Most recent known address.
+
+      - name: phone_number
+        description: Most recent known phone number.
+
+      - name: email
+        description: Most recent known email address.
+        tests:
+          - is_valid_email
 
       - name: telecom
-        description: JSON object containing the patient's phone and email.
+        description: JSON object containing 'phone' and 'email' fields.
 
       - name: marital_status
-        description: Most recent valid marital status.
+        description: Most recent known marital status.
         tests:
-          - accepted_values:
-              values: ['Annulled', 'Divorced', 'Interlocutory', 'Legally Separated', 'Married',
-                       'Common Law', 'Polygamous', 'Domestic partner', 'unmarried',
-                       'Never Married', 'Widowed', 'unknown']
+          - dbt_expectations.expect_column_values_to_be_in_set:
+              value_set: {{ get_valid_marital_statuses() }}
 
       - name: insurance_number
-        description: Patient's insurance number used for deduplication.
+        description: Insurance number used as part of deduplication key.
         tests:
           - not_null
+          - unique
 
       - name: nationality
-        description: Patient's most recent non-null nationality.
-
-      - name: last_visit_date
-        description: Most recent visit date among valid records.
+        description: Most recent known nationality.

@@ -70,7 +70,7 @@ renamed as (
 
         -- Data quality flags
         case 
-            when email ~* E'^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$' then true
+            when email ~* '{{ get_email_validation_regex() }}' then true
             else false
         end as is_valid_email,
 
