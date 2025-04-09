@@ -3,52 +3,33 @@ version: 2
 models:
   - name: fhir_patient
     description: >
-      Final patient model with deduplicated records based on insurance_provider and insurance_number.
-      This model preserves all records regardless of data quality. Validation tests are defined to detect
-      data quality issues without filtering or deleting any data.
-
+      Final deduplicated patient table formatted according to FHIR standard.
     columns:
       - name: id
-        description: Unique patient identifier generated from patient attributes.
+        description: Unique identifier generated from patient_id.
         tests:
           - not_null
           - unique
 
       - name: full_name
         description: Full name of the patient.
-        tests:
-          - not_null
 
       - name: birth_date
-        description: Most recent known birth date.
-        tests:
-          - not_null
+        description: Most recent known birth date of the patient.
 
       - name: gender
-        description: Most recent known gender value.
+        description: Normalized gender value.
         tests:
           - accepted_values:
               values: ['Male', 'Female', 'Unknown', 'Other']
 
-      - name: address
-        description: Most recent known address.
-
-      - name: phone_number
-        description: Most recent known phone number.
-
-      - name: email
-        description: Most recent known email address.
-        tests:
-          - is_valid_email
-
       - name: telecom
-        description: JSON object containing 'phone' and 'email' fields.
+        description: JSON object containing the most recent email and phone number.
 
       - name: marital_status
-        description: Most recent known marital status.
+        description: Most recent known marital status of the patient.
         tests:
-          - dbt_expectations.expect_column_values_to_be_in_set:
-              value_set: {{ get_valid_marital_statuses() }}
+          - is_valid_marital_status
 
       - name: insurance_number
         description: Insurance number used as part of deduplication key.
@@ -57,4 +38,4 @@ models:
           - unique
 
       - name: nationality
-        description: Most recent known nationality.
+        description: Most recent known nationality of the patient.

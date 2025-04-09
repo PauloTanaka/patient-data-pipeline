@@ -1,3 +1,4 @@
+{{ config(materialized='table') }}
 with filtered_valid_patients as (
     select 
 	    patient_id,
@@ -57,7 +58,6 @@ select
 	full_name,
 	birth_date,
 	gender,
-	phone_number,
     jsonb_build_object(
         'phone', phone_number,
         'email', email

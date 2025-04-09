@@ -12,8 +12,6 @@ models:
         description: "Date of birth of the patient"
       - name: gender
         description: "Gender of the patient. Expected values: male, female, other, unknown"
-      - name: address
-        description: "Full address information of the patient, including address, city, state and zip_code "
       - name: telecom
         description: "JSON object containing phone and email of the patient"
       - name: marital_status

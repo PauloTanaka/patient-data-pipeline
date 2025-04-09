@@ -16,11 +16,56 @@ models:
       - name: birth_date
         description: Patient's date of birth.
 
+      - name: last_visit_date
+        description: Date of the patient's most recent visit.
+
       - name: gender
         description: Normalized gender (Male, Female, Unknown, Other).
 
+      - name: address
+        description: Address of the patient.
+
+      - name: city
+        description: City where the patient resides.
+
+      - name: state
+        description: US state abbreviation of residence.
+
+      - name: zip_code
+        description: Postal code of the patient's address.
+
+      - name: phone_number
+        description: Patient's phone number.
+
       - name: email
         description: Patient's email address.
+
+      - name: emergency_contact_name
+        description: Name of the patient's emergency contact.
+
+      - name: emergency_contact_phone
+        description: Phone number of the emergency contact.
+
+      - name: blood_type
+        description: Blood type of the patient.
+
+      - name: insurance_provider
+        description: Name of the health insurance provider.
+
+      - name: insurance_number
+        description: Patient's health insurance number.
+
+      - name: marital_status
+        description: Marital status of the patient.
+
+      - name: preferred_language
+        description: Patient's preferred language.
+
+      - name: nationality
+        description: Nationality of the patient.
+
+      - name: allergies
+        description: Known allergies the patient has.
 
       - name: is_valid_email
         description: Flag indicating whether the email format is valid (regex).
