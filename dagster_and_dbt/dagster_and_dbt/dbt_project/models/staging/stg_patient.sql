@@ -1,4 +1,5 @@
-with source as (
+{{ config(materialized='table') }}
+with raw_patient_data_from_source as (
 
     select
         id,
@@ -26,7 +27,7 @@ with source as (
 
 ),
 
-renamed as (
+renamed_and_normalized_patient_fields_with_flags as (
 
     select
         -- IDs and names
@@ -69,8 +70,8 @@ renamed as (
         allergies,
 
         -- Data quality flags
-        case 
-            when email ~* '{{ get_email_validation_regex() }}' then true
+        case
+            when email ~* '^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$' then true
             else false
         end as is_valid_email,
 
@@ -97,9 +98,15 @@ renamed as (
         case
             when marital_status in {{ get_valid_marital_statuses() }} then true
             else false
-        end as is_valid_marital_status
+        end as is_valid_marital_status,
 
-    from source
+        case
+            when insurance_number ~* '^[A-Z]{2}[0-9]{9}$' then true
+            else false
+        end as is_valid_insurance_number
+
+
+    from raw_patient_data_from_source
 )
 
 select
@@ -128,5 +135,6 @@ select
     has_valid_visit_date,
     is_valid_state,
     is_valid_language,
-    is_valid_marital_status
-from renamed
+    is_valid_marital_status,
+    is_valid_insurance_number
+from renamed_and_normalized_patient_fields_with_flags

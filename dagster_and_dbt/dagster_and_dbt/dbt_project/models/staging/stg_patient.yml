@@ -102,3 +102,9 @@ models:
         tests:
           - accepted_values:
               values: [true, false]
+
+      - name: is_valid_insurance_number
+        description: Flag indicating whether the insurance_number format is valid (regex).
+        tests:
+          - accepted_values:
+              values: [true, false]

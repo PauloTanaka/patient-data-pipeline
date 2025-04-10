@@ -1,4 +1,7 @@
-{{ config(materialized='table') }}
+{{ config(
+    materialized='incremental',
+    unique_key='insurance_number'
+) }}
 with filtered_valid_patients as (
     select 
 	    patient_id,
@@ -14,8 +17,7 @@ with filtered_valid_patients as (
 	    marital_status,
 	    nationality
     from {{ ref('stg_patient') }}
-	where insurance_number is not null
-	  and insurance_provider is not null
+     where insurance_number ~* '^[A-Z]{2}[0-9]{9}$'
 ),
 
 deduplicated_patients_by_insurance as (
@@ -50,7 +52,7 @@ deduplicated_patients_by_insurance as (
             filter (where nationality is not null))[1] as nationality
 
     from filtered_valid_patients
-    group by insurance_provider, insurance_number
+    group by insurance_number
 )
 
 select
