@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: duplicated_patients
+    description: >
+      Table containing patient records that have the same insurance number appearing more than once.
+      Useful for identifying and investigating potential duplicate entries in the dataset.
+    columns:
+      - name: patient_id
+        description: Unique identifier of the patient.
+
+      - name: full_name
+        description: Full name of the patient, composed of first and last name.
+
+      - name: birth_date
+        description: Date of birth of the patient.
+
+      - name: last_visit_date
+        description: Most recent visit date of the patient.
+
+      - name: gender
+        description: Gender of the patient, normalized to standard categories.
+
+      - name: address
+        description: Residential address of the patient.
+
+      - name: phone_number
+        description: Contact phone number of the patient.
+
+      - name: email
+        description: Email address of the patient.
+
+      - name: insurance_number
+        description: Patient's insurance policy number. Used as the deduplication key.
+
+      - name: marital_status
+        description: Marital status of the patient.
+
+      - name: nationality
+        description: Nationality of the patient.
