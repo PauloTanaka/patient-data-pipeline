@@ -8,57 +8,84 @@ models:
     columns:
       - name: patient_id
         description: Unique patient identifier.
+
       - name: full_name
         description: Patient's full name.
+        
       - name: birth_date
         description: Patient's date of birth.
+
       - name: last_visit_date
         description: Date of the patient's last recorded visit.
+
       - name: gender
         description: Patient's gender, normalized (Male, Female, Other, Unknown).
+
       - name: address
         description: Patient's address.
+
       - name: city
         description: City of residence.
+
       - name: state
         description: Validated US state.
+
       - name: zip_code
         description: Postal ZIP code.
+
       - name: phone_number
         description: Patient's phone number.
+
       - name: email
         description: Patient's email address.
+
       - name: emergency_contact_name
         description: Name of the emergency contact.
+
       - name: emergency_contact_phone
         description: Phone number of the emergency contact.
+
       - name: blood_type
         description: Patient's blood type.
+
       - name: insurance_provider
         description: Name of the insurance provider.
+
       - name: insurance_number
         description: Insurance policy number (expected format-> AA999999999).
+
       - name: marital_status
         description: Patient's marital status.
+
       - name: preferred_language
         description: Patient's preferred language.
+
       - name: nationality
         description: Patient's nationality.
+
       - name: allergies
         description: Known patient allergies.
+
       - name: is_valid_email
         description: Boolean flag indicating if the email format is valid.
+
       - name: has_valid_birth_date
         description: Boolean flag indicating if the birth date is valid.
+
       - name: has_valid_visit_date
         description: Boolean flag indicating if the last visit date is valid.
+
       - name: is_valid_state
         description: Boolean flag indicating if the state value is valid.
+
       - name: is_valid_language
         description: Boolean flag indicating if the preferred language is valid.
+
       - name: is_valid_marital_status
         description: Boolean flag indicating if the marital status is valid.
+
       - name: is_valid_insurance_number
         description: Boolean flag indicating if the insurance number matches the required format.
+
       - name: error_type
         description: Comma-separated list of validation errors identified for each record.

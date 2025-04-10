@@ -9,49 +9,71 @@ sources:
         columns:
           - name: id
             description: "Unique identifier for the patient, automatically generated"
+
           - name: first_name
             description: "First name of the patient"
+
           - name: last_name
             description: "Last name of the patient"
+
           - name: birth_date
             description: "Date of birth of the patient"
+
           - name: gender
             description: "Gender of the patient. Expected values: male, female, other, unknown"
+
           - name: address
             description: "Address of the patient"
+
           - name: city
             description: "City of the patient's residence"
+
           - name: state
             description: "State of the patient's residence (2-letter abbreviation)"
+
           - name: zip_code
             description: "Postal code of the patient's address"
+
           - name: phone_number
             description: "Phone number of the patient"
+
           - name: email
             description: "Email address of the patient"
             tests:
               - email_format
+
           - name: emergency_contact_name
             description: "Name of the patient's emergency contact"
+
           - name: emergency_contact_phone
             description: "Phone number of the patient's emergency contact"
+
           - name: blood_type
             description: "Blood type of the patient"
+
           - name: insurance_provider
             description: "Name of the insurance provider"
+
           - name: insurance_number
             description: "Insurance number assigned to the patient"
+
           - name: marital_status
             description: "Marital status of the patient"
+
           - name: preferred_language
             description: "Preferred language of the patient"
+
           - name: nationality
             description: "Nationality of the patient"
+
           - name: allergies
             description: "Known allergies of the patient"
+
           - name: last_visit_date
             description: "Date of the patient's last visit"
+
           - name: created_at
             description: "Timestamp of when the record was created"
+
           - name: updated_at
             description: "Timestamp of when the record was last updated"
