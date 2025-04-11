@@ -35,7 +35,7 @@ deduplicated_patients_by_insurance as (
             filter (where gender is not null))[1] as gender,
 
         (array_agg(address order by last_visit_date desc nulls last)
-            filter (where address is not null))[1] as address,
+            filter (where address is not null and address <> ''))[1] as address,
 
         (array_agg(phone_number order by last_visit_date desc nulls last)
             filter (where phone_number is not null))[1] as phone_number,
