@@ -66,14 +66,14 @@ models:
       - name: allergies
         description: Known patient allergies.
 
-      - name: is_valid_email
-        description: Boolean flag indicating if the email format is valid.
-
       - name: has_valid_birth_date
         description: Boolean flag indicating if the birth date is valid.
 
       - name: has_valid_visit_date
         description: Boolean flag indicating if the last visit date is valid.
+
+      - name: is_valid_address
+        description: Flag checking whether the provided address information has any of the string fields in the Address, including line, city, state, zipcode.
 
       - name: is_valid_state
         description: Boolean flag indicating if the state value is valid.

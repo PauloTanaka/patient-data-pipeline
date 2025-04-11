@@ -17,7 +17,7 @@ with filtered_valid_patients as (
 	    marital_status,
 	    nationality
     from {{ ref('stg_patient') }}
-     where insurance_number ~* '^[A-Z]{2}[0-9]{9}$'
+     where insurance_number ~* {{ get_insurance_number_pattern() }}
 ),
 
 deduplicated_patients_by_insurance as (
@@ -60,6 +60,7 @@ select
 	full_name,
 	birth_date,
 	gender,
+    address,
     jsonb_build_object(
         'phone', phone_number,
         'email', email

@@ -22,6 +22,9 @@ models:
         tests:
           - accepted_values:
               values: ['Male', 'Female', 'Unknown', 'Other']
+      
+      - name: address
+        description: Complete address information of the patient (street, city, state and zipcode).
 
       - name: telecom
         description: JSON object containing the most recent email and phone number.

@@ -23,6 +23,9 @@ models:
         description: Normalized gender (Male, Female, Unknown, Other).
 
       - name: address
+        description: Complete address information of the patient (street, city, state and zipcode).
+
+      - name: line
         description: Address of the patient.
 
       - name: city
@@ -67,12 +70,6 @@ models:
       - name: allergies
         description: Known allergies the patient has.
 
-      - name: is_valid_email
-        description: Flag indicating whether the email format is valid (regex).
-        tests:
-          - accepted_values:
-              values: [true, false]
-
       - name: has_valid_birth_date
         description: Flag indicating whether birth date is not null and not in the future.
         tests:
@@ -81,6 +78,12 @@ models:
 
       - name: has_valid_visit_date
         description: Flag indicating whether last visit date is null or in the past.
+        tests:
+          - accepted_values:
+              values: [true, false]
+              
+      - name: is_valid_address
+        description: Flag checking whether the provided address information has any of the string fields in the Address, including line, city, state, zipcode.
         tests:
           - accepted_values:
               values: [true, false]

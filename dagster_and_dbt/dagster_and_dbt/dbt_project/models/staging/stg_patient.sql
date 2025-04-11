@@ -47,7 +47,14 @@ renamed_and_normalized_patient_fields_with_flags as (
         end as gender,
 
         -- Address
-        address,
+        RTRIM(
+            coalesce(trim(address) || ', ', '') || 
+            coalesce(trim(city) || ', ', '') || 
+            coalesce(trim(upper(state)) || ', ' , '')|| 
+            coalesce(trim(zip_code), ''),
+            ', '
+        ) as address,
+        address as line,
         city,
         upper(state) as state,
         zip_code,
@@ -71,11 +78,6 @@ renamed_and_normalized_patient_fields_with_flags as (
 
         -- Data quality flags
         case
-            when email ~* '^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$' then true
-            else false
-        end as is_valid_email,
-
-        case
             when birth_date is not null and birth_date <= current_date then true
             else false
         end as has_valid_birth_date,
@@ -84,6 +86,15 @@ renamed_and_normalized_patient_fields_with_flags as (
             when last_visit_date is null or last_visit_date <= current_date then true
             else false
         end as has_valid_visit_date,
+
+        case
+            when coalesce(trim(address), '') <> ''
+            or coalesce(trim(city), '') <> ''
+            or coalesce(trim(state), '') <> ''
+            or coalesce(trim(zip_code), '') <> ''
+            then true
+            else false
+        end as is_valid_address,
 
         case
             when state in {{ get_valid_us_states() }} then true
@@ -100,11 +111,10 @@ renamed_and_normalized_patient_fields_with_flags as (
             else false
         end as is_valid_marital_status,
 
-        case
-            when insurance_number ~* '^[A-Z]{2}[0-9]{9}$' then true
-            else false
-        end as is_valid_insurance_number
-
+        CASE
+            WHEN insurance_number ~* {{ get_insurance_number_pattern() }} THEN true
+            ELSE false
+        END AS is_valid_insurance_number
 
     from raw_patient_data_from_source
 )
@@ -116,6 +126,7 @@ select
     last_visit_date,
     gender,
     address,
+    line,
     city,
     state,
     zip_code,
@@ -130,9 +141,9 @@ select
     preferred_language,
     nationality,
     allergies,
-    is_valid_email,
     has_valid_birth_date,
     has_valid_visit_date,
+    is_valid_address,
     is_valid_state,
     is_valid_language,
     is_valid_marital_status,
