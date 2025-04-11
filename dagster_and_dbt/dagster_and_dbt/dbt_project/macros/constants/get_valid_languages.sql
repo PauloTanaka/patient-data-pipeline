@@ -1,4 +1,3 @@
-
 {% macro get_valid_languages() %}
 (
     'Arabic', 'Bulgarian', 'Bulgarian (Bulgaria)', 'Bengali', 'Czech', 'Czech (Czechia)',

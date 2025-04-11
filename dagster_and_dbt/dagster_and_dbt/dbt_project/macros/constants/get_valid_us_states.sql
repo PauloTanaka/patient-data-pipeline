@@ -1,5 +1,3 @@
--- macros/get_valid_us_states.sql
-
 {% macro get_valid_us_states() %}
     (
         'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',

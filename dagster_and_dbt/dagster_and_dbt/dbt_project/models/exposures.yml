@@ -6,7 +6,7 @@ exposures:
     label: "FHIR Patient Dashboard"
     maturity: low
     description: >
-      Power BI dashboard that displays fhir_patient table.
+      Power BI dashboard that displays fhir_patient table. These dashboards provide insights on data completeness, field standardization, and duplicate issues.
 
     depends_on:
       - ref('fhir_patient')

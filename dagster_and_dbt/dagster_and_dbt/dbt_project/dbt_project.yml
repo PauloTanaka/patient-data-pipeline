@@ -18,16 +18,16 @@ models:
   dbt_project:
 
     staging:
-      materialized: view  # staging models are usually lightweight and rebuilt often
+      materialized: view
 
     marts:
-      materialized: table  # final models used for reporting or consumption
+      materialized: table
 
     quality:
-      materialized: table  # helpful to persist data validation results
+      materialized: table
 
     sources:
-      enabled: true  # only holds .yml source definitions
+      enabled: true
 
 dispatch:
   - macro_namespace: dbt_utils
