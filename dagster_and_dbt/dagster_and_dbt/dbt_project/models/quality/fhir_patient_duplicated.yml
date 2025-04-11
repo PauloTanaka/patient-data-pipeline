@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: duplicated_patients
+  - name: fhir_patient_duplicated
     description: >
       Table containing patient records that have the same insurance number appearing more than once.
       Useful for identifying and investigating potential duplicate entries in the dataset.

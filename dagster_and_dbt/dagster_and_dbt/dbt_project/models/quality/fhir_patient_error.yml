@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: invalid_patients
+  - name: fhir_patient_error
     description: >
       Table containing patient records from the staging layer that have validation issues
       in key fields such as email, birth date, insurance number, etc.
