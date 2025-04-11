@@ -30,23 +30,16 @@ with raw_patient_data_from_source as (
 renamed_and_normalized_patient_fields_with_flags as (
 
     select
-        -- IDs and names
         id as patient_id,
         initcap(first_name) || ' ' || initcap(last_name) as full_name,
-
-        -- Dates
         birth_date,
         last_visit_date,
-
-        -- Gender normalization
         case
             when lower(gender) in ('m', 'male') then 'Male'
             when lower(gender) in ('f', 'female') then 'Female'
             when gender is null or trim(gender) = '' or lower(gender) = 'unknown' then 'Unknown'
             else 'Other'
         end as gender,
-
-        -- Address
         RTRIM(
             coalesce(trim(address) || ', ', '') || 
             coalesce(trim(city) || ', ', '') || 
@@ -58,16 +51,10 @@ renamed_and_normalized_patient_fields_with_flags as (
         city,
         upper(state) as state,
         zip_code,
-
-        -- Contact
         phone_number,
         email,
-
-        -- Emergency contact
         emergency_contact_name,
         emergency_contact_phone,
-
-        -- Other fields
         blood_type,
         insurance_provider,
         insurance_number,
@@ -111,10 +98,10 @@ renamed_and_normalized_patient_fields_with_flags as (
             else false
         end as is_valid_marital_status,
 
-        CASE
-            WHEN insurance_number ~* {{ get_insurance_number_pattern() }} THEN true
-            ELSE false
-        END AS is_valid_insurance_number
+        case
+            when insurance_number ~* {{ get_insurance_number_pattern() }} then true
+            else false
+        end as is_valid_insurance_number
 
     from raw_patient_data_from_source
 )

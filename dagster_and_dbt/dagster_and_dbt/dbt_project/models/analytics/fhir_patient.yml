@@ -12,10 +12,14 @@ models:
           - unique
 
       - name: full_name
-        description: Full name of the patient.
+        description: A name associated with the patient.
+        tests:
+          - not_null
 
       - name: birth_date
-        description: Most recent known birth date of the patient.
+        description: The date of birth for the individual.
+        tests:
+          - not_null
 
       - name: gender
         description: Normalized gender value.
@@ -25,12 +29,16 @@ models:
       
       - name: address
         description: Complete address information of the patient (street, city, state and zipcode).
+        tests:
+          - not_null
 
       - name: telecom
         description: JSON object containing the most recent email and phone number.
+        tests:
+          - not_null
 
       - name: marital_status
-        description: Most recent known marital status of the patient.
+        description: Most recent known marital (civil) status of a patient.
         tests:
           - is_valid_marital_status
 
@@ -42,3 +50,5 @@ models:
 
       - name: nationality
         description: Most recent known nationality of the patient.
+        tests:
+          - not_null

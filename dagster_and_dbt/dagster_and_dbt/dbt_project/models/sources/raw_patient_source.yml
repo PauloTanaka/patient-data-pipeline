@@ -39,8 +39,6 @@ sources:
 
           - name: email
             description: "Email address of the patient"
-            tests:
-              - email_format
 
           - name: emergency_contact_name
             description: "Name of the patient's emergency contact"

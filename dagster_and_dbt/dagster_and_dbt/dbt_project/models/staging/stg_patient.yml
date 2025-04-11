@@ -9,6 +9,7 @@ models:
         description: Unique identifier of the patient inherited from raw_patient.
         tests:
           - not_null
+          - unique
 
       - name: full_name
         description: Full name of the patient (first + last name capitalized).
@@ -24,6 +25,8 @@ models:
 
       - name: address
         description: Complete address information of the patient (street, city, state and zipcode).
+        tests:
+        - is_valid_address
 
       - name: line
         description: Address of the patient.
@@ -33,6 +36,8 @@ models:
 
       - name: state
         description: US state abbreviation of residence.
+        tests:
+          - is_valid_state
 
       - name: zip_code
         description: Postal code of the patient's address.
@@ -57,12 +62,16 @@ models:
 
       - name: insurance_number
         description: Patient's health insurance number.
+        tests:
+          - is_valid_insurance_number
 
       - name: marital_status
         description: Marital status of the patient.
 
       - name: preferred_language
         description: Patient's preferred language.
+        tests:
+          - is_valid_language
 
       - name: nationality
         description: Nationality of the patient.

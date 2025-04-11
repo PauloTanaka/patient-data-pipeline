@@ -1,4 +1,3 @@
-
 {% macro get_valid_marital_statuses() %}
 (
     'Annulled', 'Divorced', 'Interlocutory', 'Legally Separated', 'Married',
